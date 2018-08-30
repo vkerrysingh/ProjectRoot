@@ -35,12 +35,12 @@ def main():
     # DONE: 1. Define start_time to measure total program runtime by
     # collecting start time
     start_time = time()
-    sleep(75)
     
-    # TODO: 2. Define get_input_args() function to create & retrieve command
+    
+    # Done: 2. Define get_input_args() function to create & retrieve command
     # line arguments
     in_arg = get_input_args()
-    print("Arg1: {a} Arg2: {b} Arg3: {c} ".format(a=in_arg.dir,b=in_arg.arch, c=in_arch.dogfile))
+    print("Arg1: {a} Arg2: {b} Arg3: {c} ".format(a=in_arg.dir,b=in_arg.arch, c=in_arg.dogfile))
     
     # TODO: 3. Define get_pet_labels() function to create pet image labels by
     # creating a dictionary with key=filename and value=file label to be used
@@ -122,7 +122,7 @@ def get_input_args():
     return parser.parse_args()
 
 
-def get_pet_labels():
+def get_pet_labels(image_dir):
     """
     Creates a dictionary of pet labels based upon the filenames of the image 
     files. Reads in pet filenames and extracts the pet image labels from the 
@@ -135,7 +135,28 @@ def get_pet_labels():
      petlabels_dic - Dictionary storing image filename (as key) and Pet Image
                      Labels (as value)  
     """
-    pass
+    petlabels_dict = dict()
+    
+    #Retrieve filenames    
+    filename_list = listdir(image_dir)
+    
+    print("\nPrints 10 filenames from folder pet_images/")
+    for idx in range(0, 10, 1):
+        print("%2d file: %-25s" % (idx + 1, filename_list[idx]))
+    
+    for idx in range(0,len(filename_list),1):
+        #omit files thatstart with '.'
+        if filename_list[idx][0] != ".":
+            if petlabels_dict.get(filename_list[idx]) == None:
+                petLabel = ""
+                image_name = filename_list[idx].split('_')
+                
+                #Only take word that is alpha
+                for word in image_name:
+                    if word.isalpha():
+                        petLabel += word + " "
+                
+    
 
 
 def classify_images():
