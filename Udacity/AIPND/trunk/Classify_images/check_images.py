@@ -41,11 +41,12 @@ def main():
     # line arguments
     in_arg = get_input_args()
     print("Arg1: {a} Arg2: {b} Arg3: {c} ".format(a=in_arg.dir,b=in_arg.arch, c=in_arg.dogfile))
+    image_dir = a=in_arg.dir
     
     # In progress: 3. Define get_pet_labels() function to create pet image labels by
     # creating a dictionary with key=filename and value=file label to be used
     # to check the accuracy of the classifier function
-    answers_dic = get_pet_labels()
+    answers_dic = get_pet_labels(image_dir)
     for key, value in answers_dic.iteritems():
         print("Key: {a} Value: {b}".format(a=key, b=value))
 
