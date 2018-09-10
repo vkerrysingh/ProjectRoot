@@ -59,13 +59,16 @@ def main():
     for key in result_dic:
         if key[2] == 1:
             success += 1
-            print("Match Pet: {a}     Model: {b}".format(a=key[0], b=key{1}))
+            print("Match Pet: {a}     Model: {b}".format(a=key[0], b=key[1]))
+            
     
     failed = 0;
     for key in result_dic:
         if key[2] == 0:
             failed += 1
-            print("Match Pet: {a}     Model: {b}".format(a=key[0], b=key{1}))
+            print("Match Pet: {a}     Model: {b}".format(a=key[0], b=key[1]))
+    
+    print("Successful {a}, Failed {b}".format(a=success, b=failed))
     
     # TODO: 5. Define adjust_results4_isadog() function to adjust the results
     # dictionary(result_dic) to determine if classifier correctly classified
@@ -218,7 +221,7 @@ def classify_images(image_dir, petlabel_dict, model):
         model_tokens = model_label.split(", ")
         found = False
         
-        if truth in model_tokens
+        if truth in model_tokens:
             results_dic[key] = [truth,model_label,1]
         
         else:
