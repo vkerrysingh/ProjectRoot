@@ -47,7 +47,7 @@ def main():
     # creating a dictionary with key=filename and value=file label to be used
     # to check the accuracy of the classifier function
     answers_dic = get_pet_labels(image_dir)
-    for key, value in answers_dic.iteritems():
+    for key, value in answers_dic.items():
         print("Key: {a} Value: {b}".format(a=key, b=value))
 
     # TODO: 4. Define classify_images() function to create the classifier 
