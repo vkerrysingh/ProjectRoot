@@ -42,7 +42,7 @@ def main():
     in_arg = get_input_args()
     print("Arg1: {a} Arg2: {b} Arg3: {c} ".format(a=in_arg.dir,b=in_arg.arch, c=in_arg.dogfile))
     
-    # TODO: 3. Define get_pet_labels() function to create pet image labels by
+    # In progress: 3. Define get_pet_labels() function to create pet image labels by
     # creating a dictionary with key=filename and value=file label to be used
     # to check the accuracy of the classifier function
     answers_dic = get_pet_labels()
@@ -148,13 +148,20 @@ def get_pet_labels(image_dir):
         #omit files thatstart with '.'
         if filename_list[idx][0] != ".":
             if petlabels_dict.get(filename_list[idx]) == None:
-                petLabel = ""
+                pet_label = ""
                 image_name = filename_list[idx].split('_')
                 
                 #Only take word that is alpha
                 for word in image_name:
                     if word.isalpha():
-                        petLabel += word + " "
+                        pet_label += word + " "
+                
+                petlabels_dict[filename_list[idx]] = pet_label
+                
+            else:
+                print("\n {a} already exists in dictionary".format(a=filename_list[idx]))
+    
+    return petlabels_dict
                 
     
 
