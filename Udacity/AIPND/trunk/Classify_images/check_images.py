@@ -43,6 +43,7 @@ def main():
     print("Arg1: {a} Arg2: {b} Arg3: {c} ".format(a=in_arg.dir,b=in_arg.arch, c=in_arg.dogfile))
     image_dir = a=in_arg.dir
     model = in_arg.arch
+    dog_file = in_arg.dogfile
     
     # In progress: 3. Define get_pet_labels() function to create pet image labels by
     # creating a dictionary with key=filename and value=file label to be used
@@ -72,6 +73,15 @@ def main():
     
     print("Successful {a}, Failed {b}".format(a=success, b=failed))
     '''
+    
+    
+    
+    
+    # TODO: 5. Define adjust_results4_isadog() function to adjust the results
+    # dictionary(result_dic) to determine if classifier correctly classified
+    # images as 'a dog' or 'not a dog'. This demonstrates if the model can
+    # correctly classify dog images as dogs (regardless of breed)
+    adjust_results4_isadog(result_dic,dog_file)
     success = 0;  
     failed = 0;
     for key in result_dic:
@@ -81,14 +91,6 @@ def main():
             failed += 1
     
     print("Successful {a}, Failed {b}".format(a=success, b=failed))
-    
-    
-    
-    # TODO: 5. Define adjust_results4_isadog() function to adjust the results
-    # dictionary(result_dic) to determine if classifier correctly classified
-    # images as 'a dog' or 'not a dog'. This demonstrates if the model can
-    # correctly classify dog images as dogs (regardless of breed)
-    adjust_results4_isadog()
 
     # TODO: 6. Define calculates_results_stats() function to calculate
     # results of run and puts statistics in a results statistics
