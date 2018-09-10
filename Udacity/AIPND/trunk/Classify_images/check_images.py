@@ -42,18 +42,30 @@ def main():
     in_arg = get_input_args()
     print("Arg1: {a} Arg2: {b} Arg3: {c} ".format(a=in_arg.dir,b=in_arg.arch, c=in_arg.dogfile))
     image_dir = a=in_arg.dir
+    model = in_arg.arch
     
     # In progress: 3. Define get_pet_labels() function to create pet image labels by
     # creating a dictionary with key=filename and value=file label to be used
     # to check the accuracy of the classifier function
     answers_dic = get_pet_labels(image_dir)
-    for key, value in answers_dic.items():
-        print("Key: {a} Value: {b}".format(a=key, b=value))
+    #for key, value in answers_dic.items():
+    #    print("Key: {a} Value: {b}".format(a=key, b=value))
 
     # TODO: 4. Define classify_images() function to create the classifier 
     # labels with the classifier function uisng in_arg.arch, comparing the 
     # labels, and creating a dictionary of results (result_dic)
-    result_dic = classify_images()
+    result_dic = classify_images(image_dir,answers_dic,model)
+    success = 0;
+    for key in result_dic:
+        if key[2] == 1:
+            success += 1
+            print("Match Pet: {a}     Model: {b}".format(a=key[0], b=key{1}))
+    
+    failed = 0;
+    for key in result_dic:
+        if key[2] == 0:
+            failed += 1
+            print("Match Pet: {a}     Model: {b}".format(a=key[0], b=key{1}))
     
     # TODO: 5. Define adjust_results4_isadog() function to adjust the results
     # dictionary(result_dic) to determine if classifier correctly classified
@@ -144,8 +156,8 @@ def get_pet_labels(image_dir):
     filename_list = listdir(image_dir)
     
     print("\nPrints 10 filenames from folder pet_images/")
-    for idx in range(0, 10, 1):
-        print("%2d file: %-25s" % (idx + 1, filename_list[idx]))
+    #for idx in range(0, 10, 1):
+    #    print("%2d file: %-25s" % (idx + 1, filename_list[idx]))
     
     for idx in range(0,len(filename_list),1):
         #omit files thatstart with '.'
@@ -157,9 +169,9 @@ def get_pet_labels(image_dir):
                 #Only take word that is alpha
                 for word in image_name:
                     if word.isalpha():
-                        pet_label += word + " "
+                        pet_label += word.lower() + " "
                 
-                petlabels_dict[filename_list[idx]] = pet_label
+                petlabels_dict[filename_list[idx]] = pet_label.strip()
                 
             else:
                 print("\n {a} already exists in dictionary".format(a=filename_list[idx]))
@@ -169,7 +181,7 @@ def get_pet_labels(image_dir):
     
 
 
-def classify_images():
+def classify_images(image_dir, petlabel_dict, model):
     """
     Creates classifier labels with classifier function, compares labels, and 
     creates a dictionary containing both labels and comparison of them to be
@@ -194,7 +206,33 @@ def classify_images():
                     idx 2 = 1/0 (int)   where 1 = match between pet image and 
                     classifer labels and 0 = no match between labels
     """
-    pass
+    results_dic = dict()
+    for key, value in petlabel_dict.items():
+        
+        model_label = classifier(image_dir+key, model)
+        model_label = model_label.lower()
+        model_label = model_label.strip()
+        
+        truth = value
+        
+        model_tokens = model_label.split(", ")
+        found = False
+        
+        if truth in model_tokens
+            results_dic[key] = [truth,model_label,1]
+        
+        else:
+            for tokens in model_tokens:
+                sub_tokens = tokens.split(" ")
+                if (not found) and truth in sub_tokens:
+                    found = True
+                    results_dic[key] = [truth,model_label,1]
+                    break
+        
+        if (not found):
+            results_dic[key] = [truth,model_label,0]
+    
+    return results_dic
 
 
 def adjust_results4_isadog():
