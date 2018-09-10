@@ -55,7 +55,9 @@ def main():
     # labels with the classifier function uisng in_arg.arch, comparing the 
     # labels, and creating a dictionary of results (result_dic)
     result_dic = classify_images(image_dir,answers_dic,model)
-    success = 0;
+    
+    '''
+    success = 0;    
     for key in result_dic:
         if result_dic[key][2] == 1:
             success += 1
@@ -69,6 +71,18 @@ def main():
             print("Failed Match Pet: {a}     Model: {b}".format(a=result_dic[key][0], b=result_dic[key][1]))
     
     print("Successful {a}, Failed {b}".format(a=success, b=failed))
+    '''
+    success = 0;  
+    failed = 0;
+    for key in result_dic:
+        if result_dic[key][3] == 1 result_dic[key][4]== 1:
+            success += 1            
+        else:
+            failed += 1
+    
+    print("Successful {a}, Failed {b}".format(a=success, b=failed))
+    
+    
     
     # TODO: 5. Define adjust_results4_isadog() function to adjust the results
     # dictionary(result_dic) to determine if classifier correctly classified
@@ -158,7 +172,7 @@ def get_pet_labels(image_dir):
     #Retrieve filenames    
     filename_list = listdir(image_dir)
     
-    print("\nPrints 10 filenames from folder pet_images/")
+    #print("\nPrints 10 filenames from folder pet_images/")
     #for idx in range(0, 10, 1):
     #    print("%2d file: %-25s" % (idx + 1, filename_list[idx]))
     
@@ -239,7 +253,7 @@ def classify_images(image_dir, petlabel_dict, model):
     return results_dic
 
 
-def adjust_results4_isadog():
+def adjust_results4_isadog(results_dic,dogsfile):
     """
     Adjusts the results dictionary to determine if classifier correctly 
     classified images 'as a dog' or 'not a dog' especially when not a match. 
@@ -267,7 +281,32 @@ def adjust_results4_isadog():
     Returns:
            None - results_dic is mutable data type so no return needed.
     """           
-    pass
+    dognames_dict = dict()
+    with open(dogsfile,'r') as infile:
+        line = infile.readline().rstrip().lower()
+        
+        if line not in dognames_dict:
+            dognames_dict[line] = 1
+        
+        line = infile.readline()
+    
+    for key, value in results_dic.items():
+        
+        #if image label is a dog
+        if results_dic[key][0] in dognames_dict:
+            if results_dic[key][1] in dognames_dict:
+                results_dic[key].extend((1,1))
+            
+            else:
+                results_dic[key].extend((1,0))
+        
+        else:
+            if results_dic[key][1] in dognames_dict:
+                results_dic[key].extend((0,1)) 
+            else:
+                results_dic[key].extend((0,0))
+    
+    
 
 
 def calculates_results_stats():
