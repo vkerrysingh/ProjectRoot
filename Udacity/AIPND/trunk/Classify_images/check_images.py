@@ -57,16 +57,16 @@ def main():
     result_dic = classify_images(image_dir,answers_dic,model)
     success = 0;
     for key in result_dic:
-        if key[2] == 1:
+        if result_dic[key][2] == 1:
             success += 1
-            print("Match Pet: {a}     Model: {b}".format(a=key[0], b=key[1]))
+            print("Successful Match Pet: {a}     Model: {b}".format(a=result_dic[key][0], b=result_dic[key][1]))
             
     
     failed = 0;
     for key in result_dic:
-        if key[2] == 0:
+        if result_dic[key][2] == 0:
             failed += 1
-            print("Match Pet: {a}     Model: {b}".format(a=key[0], b=key[1]))
+            print("Failed Match Pet: {a}     Model: {b}".format(a=result_dic[key][0], b=result_dic[key][1]))
     
     print("Successful {a}, Failed {b}".format(a=success, b=failed))
     
@@ -215,6 +215,7 @@ def classify_images(image_dir, petlabel_dict, model):
         model_label = classifier(image_dir+key, model)
         model_label = model_label.lower()
         model_label = model_label.strip()
+        #print("model_label {a}, Parameter: {b} truth: {c}".format(a=model_label,b=image_dir+key, c=value))
         
         truth = value
         
@@ -232,8 +233,8 @@ def classify_images(image_dir, petlabel_dict, model):
                     results_dic[key] = [truth,model_label,1]
                     break
         
-        if (not found):
-            results_dic[key] = [truth,model_label,0]
+            if (not found):
+                results_dic[key] = [truth,model_label,0]
     
     return results_dic
 
