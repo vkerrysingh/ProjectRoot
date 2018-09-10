@@ -285,12 +285,16 @@ def adjust_results4_isadog(results_dic,dogsfile):
     """           
     dognames_dict = dict()
     with open(dogsfile,'r') as infile:
-        line = infile.readline().rstrip().lower()
-        
-        if line not in dognames_dict:
-            dognames_dict[line] = 1
-        
         line = infile.readline()
+        
+        while line != "":
+            
+            line = line.rstrip().lower()
+
+            if line not in dognames_dict:
+                dognames_dict[line] = 1
+
+            line = infile.readline()
     
     for key, value in results_dic.items():
         
