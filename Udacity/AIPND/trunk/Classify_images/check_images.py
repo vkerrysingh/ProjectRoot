@@ -75,7 +75,7 @@ def main():
     success = 0;  
     failed = 0;
     for key in result_dic:
-        if result_dic[key][3] == 1 result_dic[key][4]== 1:
+        if (result_dic[key][3] == 1) and (result_dic[key][4]== 1):
             success += 1            
         else:
             failed += 1
