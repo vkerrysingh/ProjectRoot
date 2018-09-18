@@ -82,6 +82,7 @@ def main():
     # images as 'a dog' or 'not a dog'. This demonstrates if the model can
     # correctly classify dog images as dogs (regardless of breed)
     adjust_results4_isadog(result_dic,dog_file)
+    '''
     success = 0;  
     failed = 0;
     for key in result_dic:
@@ -91,11 +92,11 @@ def main():
             failed += 1
     
     print("Successful {a}, Failed {b}".format(a=success, b=failed))
-
+    '''
     # TODO: 6. Define calculates_results_stats() function to calculate
     # results of run and puts statistics in a results statistics
     # dictionary (results_stats_dic)
-    results_stats_dic = calculates_results_stats()
+    results_stats_dic = calculates_results_stats(result_dic)
 
     # TODO: 7. Define print_results() function to print summary results, 
     # incorrect classifications of dogs and breeds if requested.
@@ -347,13 +348,13 @@ def calculates_results_stats(results_dic):
     results_stats["n_correct_notdogs"] = 0 #classifier image is a dog and pet image is a dog idx[3]= 0 and idx[4] = 0
     results_stats["n_correct_breed"] = 0 # all labels match idx[2],idx[3], idx[4] all equal to 1
 
-    for key in results_dic.items():
+    for key,value in results_dic.items():
         #Labels Match Exactly
-        if results_dic[key][2] = 1:
+        if (results_dic[key][2] == 1):
             results_stats["n_match"] += 1
 
         #correct breed
-        if sum(results_dic[key][2:] == 3):
+        if (sum(results_dic[key][2:]) == 3):
             results_stats["n_correct_breed"] += 1
 
         #pet image is a dog
